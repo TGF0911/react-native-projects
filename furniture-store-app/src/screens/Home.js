@@ -14,30 +14,30 @@ import { icons, images, COLORS, FONTS, SIZES } from '../constants'
 
 const ScrollableTab = ({ tabList, selectedTab, onPress }) => {
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }) => (
     <TouchableOpacity
       style={{ marginHorizontal: SIZES.padding }}
       onPress={() => onPress(item)}
     >
-      <Text style={{ color: COLORS.secondary, ...FONTS.body2 }} >{item.name}</Text>
+      <Text style={{ color: COLORS.secondary, ...FONTS.body2 }}>{item.name}</Text>
 
       {
         selectedTab.id == item.id &&
-        <View style={{ alignItems: 'center', marginTop: SIZES.base }} >
-          <View style={{ width: 20, height: 10, borderRadius: 5, backgroundColor: COLORS.blue }} ></View>
+        <View style={{ alignItems: 'center', marginTop: SIZES.base }}>
+          <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: COLORS.blue }}></View>
         </View>
       }
     </TouchableOpacity>
-  }
+  );
 
   return (
-    <View style={{ marginTop: SIZES.padding }} >
+    <View style={{ marginTop: SIZES.padding }}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={tabList}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => `${item.id}`}
       />
     </View>
   )
@@ -45,56 +45,50 @@ const ScrollableTab = ({ tabList, selectedTab, onPress }) => {
 
 const ScrollableCard = ({ navigation, productList }) => {
 
-  const renderCard = ({ item }) => {
+  const renderCard = ({ item }) => (
     <TouchableOpacity
       style={{ marginLeft: SIZES.padding }}
-      onPress={() => navigation.navigate('ItemDetail', { 'itemInfo': item })}
+      onPress={() => navigation.navigate("ItemDetail", { "itemInfo": item })}
     >
-      <View style={{ width: SIZES.width / 2 }} >
+      <View style={{ width: SIZES.width / 2 }}>
         <Image
           source={item.image}
-          resizeMode='cover'
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: SIZES.radius
-          }}
+          resizeMode="cover"
+          style={{ width: '100%', height: '100%', borderRadius: SIZES.radius * 2 }}
         />
-        <View style={{ position: 'absolute', top: 35, left: '10%', right: '10%' }} >
+
+        <View style={{ position: 'absolute', top: 15, left: '10%', right: '10%' }}>
           <Text style={{ color: COLORS.lightGray2, ...FONTS.h3 }}>Furniture</Text>
-          <Text style={{ marginTop: SIZES.base, color: COLORS.lightGray2, ...FONTS.h2 }}>{item.productName}</Text>
+          <Text style={{ marginTop: SIZES.base, color: COLORS.white, ...FONTS.h2 }}>{item.productName}</Text>
         </View>
 
-        <View style={{ position: 'absolute', bottom: 20, left: 30, borderRadius: 15, paddingHorizontal: 15, paddingVertical: 10, backgroundColor: COLORS.transparentLightGray }} >
+        <View style={{ position: 'absolute', bottom: 20, left: 30, borderRadius: 15, paddingVertical: 10, paddingHorizontal: 15, backgroundColor: COLORS.transparentLightGray }}>
           <Text style={{ ...FONTS.h2 }}>$ {item.price.toFixed(2)}</Text>
         </View>
-
       </View>
-
     </TouchableOpacity>
-  }
+  )
 
   return (
-    <View style={{ marginTop: SIZES.padding }} >
+    <View style={{ marginTop: SIZES.padding }}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={productList}
         renderItem={renderCard}
-        keyExtractor={item => item.productId}
+        keyExtractor={item => `${item.productId}`}
       />
-
     </View>
   )
 }
 
 const Home = ({ navigation }) => {
 
-  const [tabList, setTabList] = useState([
+  const [tabList, setTabList] = React.useState([
     {
       id: 0,
-      name: 'Chair',
-      title: 'Chairs',
+      name: "Chair",
+      title: "chairs",
       productList: [
         {
           productId: 1,
@@ -114,6 +108,32 @@ const Home = ({ navigation }) => {
           price: 10.00,
           image: images.whiteChair,
         },
+      ]
+    },
+    {
+      id: 1,
+      name: "Cupboard",
+      title: 'cupboards',
+      productList: [
+        {
+          productId: 4,
+          productName: 'Product 4',
+          price: 10.00,
+          image: images.redChair,
+        },
+        {
+          productId: 5,
+          productName: 'Product 5',
+          price: 10.00,
+          image: images.redChair,
+        },
+        {
+          productId: 6,
+          productName: 'Product 6',
+          price: 10.00,
+          image: images.redChair,
+        },
+
       ]
     },
     {
@@ -170,10 +190,10 @@ const Home = ({ navigation }) => {
     }
   ])
 
-  const [selectedTab, setSelectedTab] = useState({
+  const [selectedTab, setSelectedTab] = React.useState({
     id: 0,
-    name: 'Chair',
-    title: 'Chairs',
+    name: "Chair",
+    title: 'chairs',
     productList: [
       {
         productId: 1,
@@ -193,6 +213,7 @@ const Home = ({ navigation }) => {
         price: 10.00,
         image: images.whiteChair,
       },
+
     ]
   })
 
@@ -261,56 +282,58 @@ const Home = ({ navigation }) => {
           backgroundColor: COLORS.white
         }]}
       >
-        <View style={{
-          width: 50,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: COLORS.lightGray2,
-          borderRadius: 20
-        }} >
+        <View
+          style={{
+            width: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: COLORS.lightGray2,
+            borderRadius: 20
+          }}
+        >
           <Image
             source={images.sofa}
-            resizeMode='contain'
+            resizeMode="contain"
             style={{
               width: '60%',
               height: '60%'
             }}
           />
-          {/* Wordings section */}
-          <View style={{ flex: 1, marginLeft: SIZES.radius, justifyContent: 'center' }}>
-            <Text style={{ ...FONTS.h2 }} >Special Offer</Text>
-            <Text style={{ ...FONTS.body3 }} >Adding to your cart</Text>
-          </View>
+        </View>
 
-          {/* Button */}
-          <View style={{ marginRight: SIZES.radius, alignItems: 'center', justifyContent: 'center' }} >
-            <TouchableOpacity
+        {/* Wordings section */}
+        <View style={{ flex: 1, marginLeft: SIZES.radius, justifyContent: 'center' }}>
+          <Text style={{ ...FONTS.h2 }}>Special Offer</Text>
+          <Text style={{ ...FONTS.body3 }}>Adding to your cart</Text>
+        </View>
+
+        {/* Button */}
+        <View style={{ marginRight: SIZES.radius, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLORS.primary,
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '70%',
+              width: 40,
+              borderRadius: 10
+            }}
+            onPress={() => { console.log("Promo on clicked") }}
+          >
+            <Image
+              source={icons.chevron}
+              resizeMode="contain"
               style={{
-                backgroundColor: COLORS.primary,
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '70%',
-                width: 40,
-                borderRadius: 30,
+                height: '50%',
+                width: '50%'
               }}
-              onPress={() => { console.log('Promo on clicked') }}
-            >
-              <Image
-                source={icons.chevron}
-                resizeMode='contain'
-                style={{
-                  height: '50%',
-                  width: '50%'
-                }}
-              />
-
-            </TouchableOpacity>
-          </View>
-
+            />
+          </TouchableOpacity>
         </View>
       </View>
     )
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -340,7 +363,7 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex = 1,
+    flex: 1,
     backgroundColor: COLORS.white
   },
   shadow: {

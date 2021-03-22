@@ -154,7 +154,7 @@ const ItemDetail = ({ route, navigation }) => {
       >
         <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }} >
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+             onPress={() => navigation.goBack()}
           >
             <Image
               source={icons.dashboard}
